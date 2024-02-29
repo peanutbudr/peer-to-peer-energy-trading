@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 
 
-function Home() {
+function Switch() {
 
 
 
@@ -23,10 +23,11 @@ function Home() {
       <div class = "title">
         <h3 >Peer To Peer Energy Trading</h3>
       </div>
-      <MainButton  message={"Begin Simulation"} navigateTo={'switch'}/>
+      <MainButton  message={"Allow Switching"} navigateTo={'yesSwitch'}/>
+      <MainButton  message={"Don't Switch"} navigateTo={'noSwitch'}/>
 
     </>
   )
 }
 
-export default Home
+export default Switch

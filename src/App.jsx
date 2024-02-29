@@ -5,6 +5,8 @@ import SimButton  from './components.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './home.jsx'
 import Simulation from './simulation.jsx'
+import Switch from './switch.jsx'
+import NoSwitch from './noSwitch.jsx'
 
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
     <Route index element = {<Home />} />
     <Route path = '/home' element = {<Home/>} />
     <Route path = '/sim' element = {<Simulation />} />
+    <Route path = '/switch' element = {<Switch/>} />
+    <Route path = '/noSwitch' element = {<NoSwitch/>}/>
     </Routes>
   
       </div>
