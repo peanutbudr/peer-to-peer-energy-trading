@@ -29,7 +29,7 @@ export function Assumptions(){
         <li>The time lag of transfer of energy between buyer and seller and any time delay due to transaction is assumed to be 0</li>
         <li>The per unit cost proposed by the sellers is obtained by calculating LCOE (Levelized Cost of Energy) more information can be found here</li>
         <li>The default grid price of selling a unit of energy is Rs 2</li>
-        <li>The default grid price of purchasing a unit of energy is Rs 1</li>
+        <li>The default grid price of purchasing a unit of energy is Rs 10</li>
         <li>The buyers Come in a sequential manner, i.e for this model simultaneous trade of energy between prosumers and consumers are not taken into account</li>
       </ul>
     </div>
