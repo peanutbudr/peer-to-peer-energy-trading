@@ -35,42 +35,61 @@ D. Matching of the Prosumer with the buyer and then logging out that the price, 
 
 */
 
+let prosumerCost = {"P1" : 8, "P2": 7, "P3": 7.5}
+
+
 const fs = require('fs');
 
 const jsonData = JSON.parse(fs.readFileSync('data.json', 'utf8'));
-
-//console.log(jsonData);
-// Example JSON data
-// const jsonData = [
-//     { key: "array1", values: [-60, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49] },
-//     { key: "array2", values: [-4, -6, -8, -10, -12, -14, -16, -18, -20, -22, -24, -26, -28, -30, -32, -34, -36, -38, -40, -42, -44, -46, -48, -50] },
-//     { key: "array3", values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23] },
-//     { key: "array4", values: [-15, -17, -19, -21, -23, -25, -27, -29, -31, -33, -35, -37, -39, -41, -43, -45, -47, -49, -51, -53, -55, -57, -59, -61] },
-//     { key: "array5", values: [20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0, -2, -4, -6, -8, -10, -12, -14, -16, -18, -20, -22, -24, -26] }
-// ];
-
-// function sortArraysByValueIndex(index) {
-//     // Sort the arrays based on the value at the specified index
-//     return jsonData.sort((a, b) => a.values[index] - b.values[index]);
-// }
-
-// for (let i = 0; i < 24; i++) {
-//     const sortedData = sortArraysByValueIndex(i);
-//     const result = {};
-
-//     sortedData.forEach(item => {
-//         result[item.key] = item.values[i];
-//     });
-
-//     console.log(result);
-// }
-
 
 
 function sortArraysByValueIndex(index) {
     const keys = Object.keys(jsonData);
     return keys.sort((a, b) => jsonData[a][index] - jsonData[b][index]);
   }
+
+function isProspectiveBuyer(buyerDeficit){
+  if(buyerDeficit < 0)
+    return true
+  else  
+    return false
+}
+
+
+function listOfSellers(buyerValue, obj){
+  
+  // You want to create another object containing only the positive values greater than x
+  let prospectiveSellers = {};
+  
+  // Filter positive values greater than x
+  for (let key in result) {
+      if (result[key] > buyerValue && obj[key] > 0) {
+          prospectiveSellers[key] = obj[key];
+      }
+  }
+  
+  // Sort keys of filteredObj
+  let sortedKeysOfSellers = Object.keys(filteredObj).sort((a, b) => filteredObj[a] - filteredObj[b]);
+  
+  // Create a new object with sorted keys and original values
+  let sellersList = {};
+  sortedKeysOfSellers.forEach(key => {
+      sellersList[key] = obj[key];
+  });
+  
+  console.log(sellersList); // Output: { f: 6, b: 7, c: 9 }
+    return sellersList
+  
+  }
+  
+
+
+
+
+
+
+
+
 
 
 
@@ -103,19 +122,86 @@ function sortArraysByValueIndex(index) {
     var buyer3 = keyArr[2];
     var buyer4 = keyArr[3];
     var buyer5 = keyArr[4];
-   
+
+    let sellersOfThisHour = {}
+
+    for (let key in result) {
+      if (result[key] > 0) {
+          sellersOfThisHour[key] = result[key];
+      }
+  }
+
+
+
+    /// starting the algo
+    for(let i = 1; i < 4; ++i) {
+      let buyerName = keyArr[i];
+      let buyerValue = valueArr[i]
+      if(isProspectiveBuyer(valueArr)){
+        //have a list of prosumers jinka surplus is greater than the 
+      let currListOfSellers = listOfSellers(buyerValue,sellersOfThisHour)
+      
+
+
+      }
+
+      
+    }  
    
   }
 
 
-// B1: -3.080809166666667,
-// B2: -3.0411,
-// P3: -2.911923333333334,
-// P1: -2.437372,
-// P2: -1.96195
 
-// B2: -3.532566666666666,
-// P3: -3.477766666666667,
-// B1: -3.0602934,
-// P1: -2.47058085,
-// P2: -1.8954
+
+
+
+
+
+
+
+
+
+/* Assuming taht we have
+
+ => a market price from the previous transaction, a list of buyers and a list of sellers, the second most hungry buyer
+
+what to do ->
+
+sabse pehle check karo, ki prospective buyer ka deficit negative toh hai na
+
+agar hai
+  then
+    find the list of the sellers which can have the availability to meet the demand requirements ki list and arrange them in the order of the price that they are quoting
+
+
+   agar list mei kpoi bhi hai then get that seller jo 1st position mei hai,
+
+
+    if the quoted price by buyer >= seller quoted price then subhan allah, trade happens at the price at which the seller wants to buy
+
+    and this price becomes the market price for thte next trade
+
+
+    agar price quoted by the buyer  <= price quoted by the seller then bidding war start ho jayegi sabse saste wale seller ke saath
+
+    jaise hee unn dono ka price cross hua, trade happens and now the surplus of the prosumer is redused by the absolute value of the deficit of consumer to now participate for the trade in the same hour with the next buyer
+
+   agar available seller ki list hee khali hai to move on to the next prospective buyer
+
+
+
+agar prospective buyer hee nhi hai toh uss ghante ke trades band kardo and move on to the next hour!!
+
+
+
+
+
+
+
+
+
+if there is only 1 prosumer then good we will have the bidding wr with only one prosumer, if there are multiple prospective prosumers then we say ki bidding war will happen with the cheapest prospective prosumer and set the market price for the next trade
+
+
+
+*/
